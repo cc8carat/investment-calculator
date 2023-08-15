@@ -16,6 +16,7 @@ function Result({ yearlyData }) {
         </tr>
       </thead>
       <tbody>
+        {yearlyData.length === 0 && <div>No data is available</div>}
         {yearlyData.length > 0 &&
           yearlyData.map((data) => {
             const { year, savingsEndOfYear, yearlyInterest, totalInterest, totalInvestedCapital } = data;
