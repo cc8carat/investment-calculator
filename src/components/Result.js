@@ -1,7 +1,6 @@
 import styles from './Result.module.css';
 
 function Result({ yearlyData }) {
-  console.log(yearlyData);
   yearlyData.length > 0 && yearlyData.map((data) => <div></div>);
 
   return (
