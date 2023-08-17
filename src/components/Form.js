@@ -4,29 +4,34 @@ import Button from './Button';
 
 import styles from './Form.module.css';
 
-function Form({ calculateHandler }) {
-  const [currentSavings, setCurrentSavings] = useState('');
-  const [yearlySavings, setYearlySavings] = useState('');
-  const [rate, setRate] = useState('');
-  const [duration, setDuration] = useState('');
+const initalState = {
+  'current-savings': 10000,
+  'yearly-contribution': 500,
+  'expected-return': 5,
+  duration: 5,
+};
 
-  const changeHandler = (e, stateUpdateFn) => {
-    stateUpdateFn(e.target.value);
+function Form({ calculateHandler }) {
+  const [userInput, setUserInput] = useState(initalState);
+
+  const changeHandler = (name, value) => {
+    setUserInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const inputData = {
-      currentSavings: +currentSavings,
-      yearlySavings: +yearlySavings,
-      rate: +rate / 100,
-      duration: +duration,
-    };
-    calculateHandler(inputData);
+    calculateHandler(userInput);
+  };
+
+  const resetHandler = (e) => {
+    setUserInput(initalState);
   };
 
   return (
-    <form className={styles.form} onSubmit={submitHandler}>
+    <form className={styles.form} onSubmit={submitHandler} onReset={resetHandler}>
       <div className={styles['input-group']}>
         <p>
           <label htmlFor='current-savings'>Current Savings ($)</label>
@@ -34,8 +39,9 @@ function Form({ calculateHandler }) {
             type='number'
             id='current-savings'
             onChange={(e) => {
-              changeHandler(e, setCurrentSavings);
+              changeHandler('current-savings', e.target.value);
             }}
+            value={userInput['current-savings']}
           />
         </p>
         <p>
@@ -44,8 +50,9 @@ function Form({ calculateHandler }) {
             type='number'
             id='yearly-contribution'
             onChange={(e) => {
-              changeHandler(e, setYearlySavings);
+              changeHandler('yearly-contribution', e.target.value);
             }}
+            value={userInput['yearly-contribution']}
           />
         </p>
       </div>
@@ -56,8 +63,9 @@ function Form({ calculateHandler }) {
             type='number'
             id='expected-return'
             onChange={(e) => {
-              changeHandler(e, setRate);
+              changeHandler('expected-return', e.target.value);
             }}
+            value={userInput['expected-return']}
           />
         </p>
         <p>
@@ -66,8 +74,9 @@ function Form({ calculateHandler }) {
             type='number'
             id='duration'
             onChange={(e) => {
-              changeHandler(e, setDuration);
+              changeHandler('duration', e.target.value);
             }}
+            value={userInput.duration}
           />
         </p>
       </div>
