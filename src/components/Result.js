@@ -1,3 +1,5 @@
+import { formatter } from '../utils/fomatter';
+
 import styles from './Result.module.css';
 
 function Result({ yearlyData }) {
@@ -20,12 +22,12 @@ function Result({ yearlyData }) {
           yearlyData.map((data) => {
             const { year, savingsEndOfYear, yearlyInterest, totalInterest, totalInvestedCapital } = data;
             return (
-              <tr>
+              <tr key={year}>
                 <td>{year}</td>
-                <td>{savingsEndOfYear}</td>
-                <td>{yearlyInterest}</td>
-                <td>{totalInterest}</td>
-                <td>{totalInvestedCapital}</td>
+                <td>{formatter.format(savingsEndOfYear)}</td>
+                <td>{formatter.format(yearlyInterest)}</td>
+                <td>{formatter.format(totalInterest)}</td>
+                <td>{formatter.format(totalInvestedCapital)}</td>
               </tr>
             );
           })}
